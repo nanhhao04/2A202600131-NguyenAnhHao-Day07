@@ -18,14 +18,9 @@ from src.embeddings import (
 from src.models import Document
 from src.store import EmbeddingStore
 
-SAMPLE_FILES = [
-    "data/python_intro.txt",
-    "data/vector_store_notes.md",
-    "data/rag_system_design.md",
-    "data/customer_support_playbook.txt",
-    "data/chunking_experiment_report.md",
-    "data/vi_retrieval_notes.md",
-]
+# Tự động quét tất cả các file trong thư mục data
+DATA_DIR = Path("data")
+SAMPLE_FILES = [str(f) for f in DATA_DIR.glob("*") if f.suffix.lower() in {".md", ".txt"}]
 
 
 def load_documents_from_files(file_paths: list[str]) -> list[Document]:
@@ -58,7 +53,7 @@ def load_documents_from_files(file_paths: list[str]) -> list[Document]:
 
 def demo_llm(prompt: str) -> str:
     """A simple mock LLM for manual RAG testing."""
-    preview = prompt[:400].replace("\n", " ")
+    preview = prompt[:2000].replace("\n", " ")
     return f"[DEMO LLM] Generated answer from prompt preview: {preview}..."
 
 
